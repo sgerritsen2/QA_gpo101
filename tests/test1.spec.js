@@ -8,58 +8,89 @@ describe('test1', function() {
   this.timeout(30000)
   let driver
   let vars
+
   if (!fs.existsSync('./screenshots')) {
-        fs.mkdirSync('./screenshots');
-    }
+    console.log('Creando carpeta screenshots...');
+    fs.mkdirSync('./screenshots');
+  } else {
+    console.log('La carpeta screenshots ya existe.');
+  }
+
   beforeEach(async function() {
+    console.log('Configurando opciones para Chrome...');
     const chrome = require('selenium-webdriver/chrome');
-        const options = new chrome.Options();
-        options.addArguments('--headless', '--no-sandbox', '--disable-dev-shm-usage');
-        driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
+    const options = new chrome.Options();
+    options.addArguments('--headless', '--no-sandbox', '--disable-dev-shm-usage');
+    console.log('Inicializando driver de Chrome...');
+    driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
     vars = {}
   })
-  afterEach(async function () {
-        if (driver) {
-            // Take a screenshot of the result page
-            const filename = this.currentTest.fullTitle()
-                .replace(/['"]+/g, '')
-                .replace(/[^a-z0-9]/gi, '_')
-                .toLowerCase();;
-            const encodedString = await driver.takeScreenshot();
-            await fs.writeFileSync(`./screenshots/${filename}.png`,
-                encodedString, 'base64');
-            // Close the browser
-            await driver.quit();
-        }
 
-    });
+  afterEach(async function () {
+    if (driver) {
+      console.log('Tomando captura de pantalla...');
+      // Toma una captura de pantalla del resultado de la prueba
+      const filename = this.currentTest.fullTitle()
+          .replace(/['"]+/g, '')
+          .replace(/[^a-z0-9]/gi, '_')
+          .toLowerCase();
+      const encodedString = await driver.takeScreenshot();
+      fs.writeFileSync(`./screenshots/${filename}.png`, encodedString, 'base64');
+      console.log(`Captura de pantalla guardada como ./screenshots/${filename}.png`);
+      console.log('Cerrando el navegador...');
+      await driver.quit();
+    }
+  });
+
   it('test', async function() {
-    await driver.get("http://localhost:8000")
-    await driver.manage().window().setRect({ width: 1440, height: 799 })
-    await driver.findElement(By.id("num1")).click()
-    await driver.findElement(By.id("num1")).sendKeys("1")
-    await driver.findElement(By.id("num2")).click()
-    await driver.findElement(By.id("num2")).sendKeys("2")
-    await driver.findElement(By.css("button:nth-child(1)")).click()
-    await driver.findElement(By.id("num1")).click()
-    await driver.findElement(By.id("num1")).sendKeys("4")
-    await driver.findElement(By.id("num2")).click()
-    await driver.findElement(By.id("num2")).sendKeys("213123")
-    await driver.findElement(By.css("button:nth-child(1)")).click()
-    await driver.findElement(By.id("num1")).click()
-    await driver.findElement(By.id("num1")).sendKeys("234124")
-    await driver.findElement(By.css("button:nth-child(1)")).click()
-    await driver.findElement(By.id("num1")).click()
-    await driver.findElement(By.id("num1")).sendKeys("-234124")
-    await driver.findElement(By.css("button:nth-child(1)")).click()
-    await driver.findElement(By.id("num2")).click()
-    await driver.findElement(By.id("num2")).click()
-    await driver.findElement(By.id("num2")).click()
-    await driver.findElement(By.id("num2")).click()
-    await driver.findElement(By.id("num2")).sendKeys("-213123412")
-    await driver.findElement(By.css("button:nth-child(1)")).click()
-    await driver.findElement(By.id("num1")).click()
-    await driver.findElement(By.id("num1")).sendKeys("-234124421")
-    await driver.findElement(By.css("button:nth-child(1)")).click()
-  })
-})
+    console.log('Abriendo URL: http://localhost:8000');
+    await driver.get("http://localhost:8000");
+    console.log('Estableciendo tamaño de la ventana a 1440x799');
+    await driver.manage().window().setRect({ width: 1440, height: 799 });
+    
+    console.log('Haciendo click en num1 y enviando "1"');
+    await driver.findElement(By.id("num1")).click();
+    await driver.findElement(By.id("num1")).sendKeys("1");
+    
+    console.log('Haciendo click en num2 y enviando "2"');
+    await driver.findElement(By.id("num2")).click();
+    await driver.findElement(By.id("num2")).sendKeys("2");
+    
+    console.log('Haciendo click en el botón para calcular');
+    await driver.findElement(By.css("button:nth-child(1)")).click();
+    
+    console.log('Nuevo conjunto de operaciones: Enviando "4" a num1 y "213123" a num2');
+    await driver.findElement(By.id("num1")).click();
+    await driver.findElement(By.id("num1")).sendKeys("4");
+    await driver.findElement(By.id("num2")).click();
+    await driver.findElement(By.id("num2")).sendKeys("213123");
+    console.log('Haciendo click en el botón para calcular');
+    await driver.findElement(By.css("button:nth-child(1)")).click();
+    
+    console.log('Enviando "234124" a num1 y haciendo click en calcular');
+    await driver.findElement(By.id("num1")).click();
+    await driver.findElement(By.id("num1")).sendKeys("234124");
+    await driver.findElement(By.css("button:nth-child(1)")).click();
+    
+    console.log('Enviando "-234124" a num1 y haciendo click en calcular');
+    await driver.findElement(By.id("num1")).click();
+    await driver.findElement(By.id("num1")).sendKeys("-234124");
+    await driver.findElement(By.css("button:nth-child(1)")).click();
+    
+    console.log('Enviando "-213123412" a num2 y haciendo click en calcular');
+    // Se hacen múltiples clicks en num2 antes de enviar el valor
+    await driver.findElement(By.id("num2")).click();
+    await driver.findElement(By.id("num2")).click();
+    await driver.findElement(By.id("num2")).click();
+    await driver.findElement(By.id("num2")).click();
+    await driver.findElement(By.id("num2")).sendKeys("-213123412");
+    await driver.findElement(By.css("button:nth-child(1)")).click();
+    
+    console.log('Enviando "-234124421" a num1 y haciendo click en calcular');
+    await driver.findElement(By.id("num1")).click();
+    await driver.findElement(By.id("num1")).sendKeys("-234124421");
+    await driver.findElement(By.css("button:nth-child(1)")).click();
+    
+    console.log('Prueba finalizada.');
+  });
+});
