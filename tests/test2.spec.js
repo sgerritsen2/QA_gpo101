@@ -17,13 +17,14 @@ describe('Tarea1', function() {
   afterEach(async function() {
     await driver.quit(); // Quit instead of closing
   });
-  it('test_1', async function() {
+  it('test_2', async function() {
     await driver.get("http://localhost:8000/")
     await driver.manage().window().setRect({ width: 1053, height: 799 })
+    await driver.findElement(By.linkText("src/")).click()
     await driver.findElement(By.id("num1")).click()
     await driver.findElement(By.id("num1")).sendKeys("-9")
     await driver.findElement(By.id("num2")).click()
-    await driver.findElement(By.id("num2")).sendKeys("-9")
+    await driver.findElement(By.id("num2")).sendKeys("9")
     await driver.findElement(By.css("button:nth-child(2)")).click()
   })
 })
