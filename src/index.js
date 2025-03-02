@@ -1,36 +1,68 @@
-function calculate() {
-  const num1 = parseFloat(document.getElementById("num1").value);
-  const num2 = parseFloat(document.getElementById("num2").value);
 
-  // Validate input
-  if (isNaN(num1) || isNaN(num2)) {
-    document.getElementById("result").innerText = "Result: Please enter valid numbers";
-    return;
+let currentOperator = "+";
+
+function changeOperation(op) {
+  currentOperator = op;
+  
+  document.getElementById("sum-button").classList.remove("active");
+  document.getElementById("subtract-button").classList.remove("active");
+  document.getElementById("multiply-button").classList.remove("active");
+  document.getElementById("divide-button").classList.remove("active");
+  
+  switch(op) {
+    case "+":
+      document.getElementById("sum-button").classList.add("active");
+      break;
+    case "-":
+      document.getElementById("subtract-button").classList.add("active");
+      break;
+    case "*":
+      document.getElementById("multiply-button").classList.add("active");
+      break;
+    case "/":
+      document.getElementById("divide-button").classList.add("active");
+      break;
   }
-
-  document.getElementById("operator").innerText = "+"; // Update operator display
-  const result = num1 + num2;
-  document.getElementById("result").innerText = `Result: ${result.toFixed(2)}`;
 }
 
-function subtract() {
-  const num1 = parseFloat(document.getElementById("num1").value);
-  const num2 = parseFloat(document.getElementById("num2").value);
+function calculate() {
+  let num1 = parseFloat(document.getElementById("num1").value);
+  let num2 = parseFloat(document.getElementById("num2").value);
 
-  // Validate input
   if (isNaN(num1) || isNaN(num2)) {
-    document.getElementById("result").innerText = "Result: Please enter valid numbers";
-    return;
+      alert("Please enter valid numbers.");
+      return;
   }
 
-  document.getElementById("operator").innerText = "-"; // Update operator display
-  const result = num1 - num2;
-  document.getElementById("result").innerText = `Result: ${result.toFixed(2)}`;
+  let result;
+  switch (currentOperator) {
+      case "+":
+          result = num1 + num2;
+          break;
+      case "-":
+          result = num1 - num2;
+          break;
+      case "*":
+          result = num1 * num2;
+          break;
+      case "/":
+          if (num2 === 0) {
+              alert("Cannot divide by zero.");
+              return;
+          }
+          result = num1 / num2;
+          break;
+      default:
+          alert("Invalid operator");
+          return;
+  }
+  document.getElementById("result").innerText = "Result: " + result;
 }
 
 function resetFields() {
   document.getElementById("num1").value = "";
   document.getElementById("num2").value = "";
-  document.getElementById("operator").innerText = "+"; // Reset operator display
-  document.getElementById("result").innerText = "Result: ";
+  document.getElementById("result").innerText = "Result:";
+  
+  changeOperation("+");
 }
