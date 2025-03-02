@@ -30,6 +30,7 @@ h1 {
 /* Style the input groups */
 .input-group {
   margin-bottom: 15px;
+  align-items: flex-start;
   text-align: left;
 }
 
@@ -39,7 +40,8 @@ label {
   font-weight: bold;
 }
 
-input {
+input,
+select {
   padding: 10px;
   font-size: 16px;
   width: 100%;
@@ -73,4 +75,29 @@ h3 {
   margin-top: 20px;
   color: #333;
   font-size: 24px;
+}
+
+/* Style para los botones de operación */
+.operation-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.operation-button {
+  background-color: #3498db;
+  margin: 0 5px;
+  width: 40px;
+}
+
+.operation-button:hover {
+  background-color: #2980b9;
+}
+
+.active {
+  background-color: #e74c3c;
+}
+
+.active:hover {
+  background-color: #c0392b;
 }
