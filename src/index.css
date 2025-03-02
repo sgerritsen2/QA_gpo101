@@ -1,4 +1,4 @@
-/* Style body */
+/* Style the body */
 body {
   font-family: Arial, sans-serif;
   background-color: #f0f0f0;
@@ -10,7 +10,7 @@ body {
   height: 100vh;
 }
 
-/* Style wrapper */
+/* Style the wrapper */
 .wrapper {
   background-color: #fff;
   padding: 30px;
@@ -27,7 +27,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* Style input groups */
+/* Style the input groups */
 .input-group {
   margin-bottom: 15px;
   align-items: flex-start;
@@ -50,7 +50,7 @@ select {
   box-sizing: border-box;
 }
 
-/* Style button group */
+/* Style the button group */
 .button-group {
   margin-top: 20px;
 }
@@ -70,30 +70,34 @@ button:hover {
   background-color: #45a049;
 }
 
-/* Style result display */
+/* Style the result display */
 h3 {
   margin-top: 20px;
   color: #333;
   font-size: 24px;
 }
 
-/* Style buttons */
+/* Style para los botones de operación */
 .operation-buttons {
   display: flex;
   justify-content: center;
   margin: 15px 0;
 }
+
 .operation-button {
   background-color: #3498db;
   margin: 0 5px;
   width: 40px;
 }
+
 .operation-button:hover {
   background-color: #2980b9;
 }
+
 .active {
   background-color: #e74c3c;
 }
+
 .active:hover {
   background-color: #c0392b;
 }
