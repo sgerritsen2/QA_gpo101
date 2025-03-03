@@ -1,4 +1,4 @@
- const { Builder, By, Key, until } = require('selenium-webdriver');
+const { Builder, By, Key, until } = require('selenium-webdriver');
 const assert = require('assert');
 const chrome = require('selenium-webdriver/chrome');
 
