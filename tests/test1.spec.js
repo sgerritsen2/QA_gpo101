@@ -7,13 +7,13 @@ describe('Tarea1', function() {
   let driver;
   let vars;
   
-  beforeEach(async function() {
-    driver = await new Builder()
-      .forBrowser('chrome')
-      .setChromeOptions(new chrome.Options().headless()) // Corrected to use chrome.Options
-      .build();
-    vars = {};
-  });
+ beforeEach(async function() {
+  driver = await new Builder()
+    .forBrowser('chrome')
+    .setChromeOptions(new chrome.Options().headless()) // Corrected line
+    .build();
+  vars = {};
+});
 
   afterEach(async function() {
     await driver.quit(); // Quit instead of closing
