@@ -1,46 +1,73 @@
 name: Run tests
 
+ 
+
 on:
+
   workflow_dispatch:
 
+  
+
 jobs:
+
   test:
+
     name: Test
+
     runs-on: ubuntu-22.04
 
+ 
+
     container:
+
       image: node:20
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+ 
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+
         with:
+
           node-version: '20'
 
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
+      - uses: browser-actions/setup-chrome@v1
+
         with:
+
           chrome-version: 120
+
           install-dependencies: true
 
-      - name: Run tests
-        run: |
-          cd src
-          python3 -m http.server 8000 &
-          sleep 10 &&
-          curl http://localhost:8000
-          cd ..
-          cd tests
-          npm install
-          ./node_modules/.bin/mocha *.js
+      - run: |
 
-      - name: Upload screenshots
-        uses: actions/upload-artifact@v4
+            cd src
+
+            python3 -m http.server 8000 &
+
+            sleep 10 &&
+
+            curl http://localhost:8000
+
+            cd ..
+
+            cd tests
+
+            npm install
+
+            ./node_modules/.bin/mocha *.js
+
+       
+
+      - uses: actions/upload-artifact@v4
+
         if: always()
-        with:
-          name: screenshots
-          path: screenshots/
 
+        with:
+
+          name: screenshots
+
+          path: screenshots/
