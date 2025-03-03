@@ -1,5 +1,6 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const assert = require('assert');
+const chrome = require('selenium-webdriver/chrome');
 
 describe('Tarea1', function() {
   this.timeout(30000);
@@ -9,7 +10,7 @@ describe('Tarea1', function() {
   beforeEach(async function() {
     driver = await new Builder()
       .forBrowser('chrome')
-      .setChromeOptions(new (require('selenium-webdriver/chrome').Options)().headless()) // Run in headless mode
+      .setChromeOptions(new chrome.Options().headless()) // Corrected to use chrome.Options
       .build();
     vars = {};
   });
